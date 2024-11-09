@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
-const apiBaseURL = "https://67281923270bd0b9755456e8.mockapi.io/api/v1/students";
+const apiBaseURL = "https://67281923270bd0b9755456e8.mockapi.io/api/v1/users";
 
 function App() {
   const [students, setStudents] = useState([]);
