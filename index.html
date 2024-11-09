@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AJAX 연습</title>
+    <style>
+        /* 모달 스타일 */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            padding-top: 60px; 
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>학생 데이터 관리</h1>
+    <button id="btnStu">모든 학생 데이터 가져오기</button> <br />
+    <button id="openAddModal">학생 데이터 추가</button>
+    <button id="openUpdateModal">학생 데이터 수정</button>
+
+    <div id="contents"></div>
+
+    <!-- 데이터 추가 모달 -->
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeAddModal">&times;</span>
+            <h2>학생 데이터 추가</h2>
+            <label for="name">이름</label>
+            <input type="text" id="name" placeholder="이름" required />
+            <label for="age">나이</label>
+            <input type="number" id="age" placeholder="나이" required />
+            <button id="btnAdd">추가</button>
+        </div>
+    </div>
+
+    <!-- 데이터 수정 모달 -->
+    <div id="updateModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeUpdateModal">&times;</span>
+            <h2>학생 데이터 수정</h2>
+            <label for="updateId">학생 ID</label>
+            <input type="number" id="updateId" placeholder="ID 입력" required />
+            <label for="updateName">이름</label>
+            <input type="text" id="updateName" placeholder="이름" />
+            <label for="updateAge">나이</label>
+            <input type="number" id="updateAge" placeholder="나이" />
+            <button id="btnUpdate">수정</button>
+        </div>
+    </div>
+
+    <h2>학생 데이터 삭제</h2>
+    <label for="deleteName">이름</label>
+    <input type="text" id="deleteName" placeholder="이름" required />
+    <button id="btnDelete">삭제</button>
+
+    <script>
+        window.onload = function () {
+            let btnStu = document.getElementById("btnStu");
+            let btnAdd = document.getElementById("btnAdd");
+            let btnUpdate = document.getElementById("btnUpdate");
+            let btnDelete = document.getElementById("btnDelete");
+
+            let openAddModal = document.getElementById("openAddModal");
+            let addModal = document.getElementById("addModal");
+            let closeAddModal = document.getElementById("closeAddModal");
+
+            let openUpdateModal = document.getElementById("openUpdateModal");
+            let updateModal = document.getElementById("updateModal");
+            let closeUpdateModal = document.getElementById("closeUpdateModal");
+
+            // 이벤트 리스너 설정
+            btnStu.addEventListener("click", getStudentsWithCourses);
+
+            // 추가 모달 열기/닫기 이벤트
+            openAddModal.addEventListener("click", () => addModal.style.display = "block");
+            closeAddModal.addEventListener("click", () => addModal.style.display = "none");
+            btnAdd.addEventListener("click", function () {
+                postData();
+                addModal.style.display = "none";
+            });
+
+            // 수정 모달 열기/닫기 이벤트
+            openUpdateModal.addEventListener("click", () => updateModal.style.display = "block");
+            closeUpdateModal.addEventListener("click", () => updateModal.style.display = "none");
+            btnUpdate.addEventListener("click", function () {
+                let id = document.getElementById("updateId").value;
+                if (id) {
+                    updateData(id);
+                    updateModal.style.display = "none";
+                } else {
+                    alert("수정할 ID를 입력하세요.");
+                }
+            });
+
+            // 삭제 버튼 이벤트
+            btnDelete.addEventListener("click", function () {
+                let name = document.getElementById("deleteName").value;
+                if (name) {
+                    deleteDataByName(name);
+                } else {
+                    alert("삭제할 이름을 입력하세요.");
+                }
+            });
+        }
+
+        function getStudentsWithCourses() {
+            let contents = document.getElementById("contents");
+            contents.innerHTML = ""; // 초기화
+
+            for (let i = 0; i < 10; i++) {
+                const xhr = new XMLHttpRequest();
+                xhr.open("GET", `http://localhost:3001/${i}`);
+                xhr.setRequestHeader("content-type", "application/json");
+                xhr.onload = () => {
+                    if (xhr.status === 200) {
+                        const student = JSON.parse(xhr.response);
+                        contents.innerHTML += `<li>[ID] ${student.id}, [이름] ${student.name}, [나이] ${student.age}세</li>`;
+                    } else {
+                        console.log("데이터를 가져오는 중 오류 발생:", xhr.status, xhr.statusText);
+                    }
+                };
+                xhr.send();
+            }
+        }
+
+        function postData() {
+            let name = document.getElementById("name").value;
+            let age = document.getElementById("age").value;
+            const xhr = new XMLHttpRequest();
+
+            xhr.open("POST", "http://localhost:3001/students");
+            xhr.setRequestHeader("content-type", "application/json; charset=UTF-8");
+            const data = { name: name, age: parseInt(age, 10) };
+
+            xhr.send(JSON.stringify(data));
+
+            xhr.onload = () => {
+                if (xhr.status === 201) {
+                    // 새로 추가된 데이터를 반영하기 위해 목록 새로고침
+                    getStudentsWithCourses();
+                } else {
+                    console.log("추가 중 오류 발생:", xhr.status, xhr.statusText);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
