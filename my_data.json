@@ -1,72 +1,72 @@
 [
   {
-    "createdAt": "2024-11-03T07:03:30.853Z",
+    "createdAt": "2024-11-09T02:01:45.067Z",
     "name": "Jery",
-    "age": "20",
-    "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/893.jpg",
+    "age": 20,
+    "color": "blue",
     "id": "1"
   },
   {
-    "createdAt": "2024-11-03T02:49:47.223Z",
+    "createdAt": "2024-11-09T10:10:01.637Z",
     "name": "Jam",
-    "age": "25",
-    "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/597.jpg",
+    "age": 25,
+    "color": "violet",
     "id": "2"
   },
   {
-    "createdAt": "2024-11-03T12:13:56.252Z",
+    "createdAt": "2024-11-08T20:33:26.390Z",
     "name": "Marry",
-    "age" : "25",
-    "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1170.jpg",
+    "age": 25,
+    "color": "green",
     "id": "3"
   },
   {
-    "createdAt": "2024-11-03T20:23:24.393Z",
-"name": "Harry",
-    "age" : "22",
-        "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/752.jpg",
+    "createdAt": "2024-11-09T08:47:54.082Z",
+    "name": "Harry",
+    "age": 22,
+    "color": "salmon",
     "id": "4"
   },
   {
-    "createdAt": "2024-11-03T12:01:15.717Z",
+    "createdAt": "2024-11-09T00:09:50.245Z",
     "name": "Sep",
-    "age" : "14",
-    "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/429.jpg",
+    "age": 14,
+    "color": "black",
     "id": "5"
   },
   {
-    "createdAt": "2024-11-03T08:55:26.241Z",
+    "createdAt": "2024-11-08T15:20:44.285Z",
     "name": "Jin",
-    "age" : "26",
-    "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/615.jpg",
+    "age": 26,
+    "color": "indigo",
     "id": "6"
   },
   {
-    "createdAt": "2024-11-03T23:20:50.289Z",
+    "createdAt": "2024-11-08T21:09:05.019Z",
     "name": "Kitty",
-    "age" : "28",
-    "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/584.jpg",
+    "age": 28,
+    "color": "ivory",
     "id": "7"
   },
   {
-    "createdAt": "2024-11-03T13:48:24.716Z",
+    "createdAt": "2024-11-08T18:15:11.540Z",
     "name": "Hanry",
-    "age" : "18",
-    "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1211.jpg",
+    "age": 18,
+    "color": "teal",
     "id": "8"
   },
   {
-    "createdAt": "2024-11-03T12:42:31.515Z",
+    "createdAt": "2024-11-09T10:13:14.694Z",
     "name": "Ken",
-    "age" : "34",
-    "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/636.jpg",
+    "age": 34,
+    "color": "mint green",
     "id": "9"
   },
   {
-    "createdAt": "2024-11-03T03:29:11.694Z",
+    "createdAt": "2024-11-09T08:11:10.059Z",
     "name": "Pony",
-    "age" : "28",
-    "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/838.jpg",
+    "age": 28,
+    "color": "fuchsia",
     "id": "10"
   }
 ]
