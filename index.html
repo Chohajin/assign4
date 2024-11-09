@@ -31,8 +31,8 @@
                     <input type="text" id="name" class="form-control" placeholder="이름" required />
                     <label for="age">나이</label>
                     <input type="number" id="age" class="form-control" placeholder="나이" required />
-                    <label for="subject">과목명</label>
-                    <input type="text" id="subject" class="form-control" placeholder="과목명" required />
+                    <label for="home">거주지</label>
+                    <input type="text" id="home" class="form-control" placeholder="거주지" required />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
@@ -59,8 +59,8 @@
                     <input type="text" id="updateName" class="form-control" placeholder="이름" />
                     <label for="updateAge">나이</label>
                     <input type="number" id="updateAge" class="form-control" placeholder="나이" />
-                    <label for="updateSubject">과목명</label>
-                    <input type="text" id="updateSubject" class="form-control" placeholder="과목명" />
+                    <label for="updateHome">거주지</label>
+                    <input type="text" id="updateHome" class="form-control" placeholder="거주지" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
@@ -71,8 +71,8 @@
     </div>
 
     <h2>학생 데이터 삭제</h2>
-    <label for="deleteName">이름</label>
-    <input type="text" id="deleteName" placeholder="이름" required />
+    <label for="deleteId">학생 ID</label>
+    <input type="text" id="deleteId" placeholder="ID 입력" required />
     <button id="btnDelete">삭제</button>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -102,11 +102,11 @@
             });
 
             btnDelete.addEventListener("click", function () {
-                let name = document.getElementById("deleteName").value;
-                if (name) {
-                    deleteDataByName(name);
+                let id = document.getElementById("deleteId").value;
+                if (id) {
+                    deleteDataById(id);
                 } else {
-                    alert("삭제할 이름을 입력하세요.");
+                    alert("삭제할 ID를 입력하세요.");
                 }
             });
         }
@@ -119,7 +119,7 @@
                 .then(response => response.json())
                 .then(students => {
                     contents.innerHTML = students.map(student => 
-                        `<li>[ID] ${student.id}, [이름] ${student.name}, [나이] ${student.age}세, [과목명] ${student.subject}</li>`
+                        `<li>[ID] ${student.id}, [이름] ${student.name}, [나이] ${student.age}세, [거주지] ${student.home}</li>`
                     ).join('');
                 })
                 .catch(error => console.error("데이터를 가져오는 중 오류 발생:", error));
@@ -129,12 +129,12 @@
             let id = document.getElementById("id").value;
             let name = document.getElementById("name").value;
             let age = document.getElementById("age").value;
-            let subject = document.getElementById("subject").value;
+            let home = document.getElementById("home").value;
 
             fetch(apiBaseURL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id, name, age: parseInt(age, 10), subject })
+                body: JSON.stringify({ id, name, age: parseInt(age, 10), home })
             })
             .then(response => {
                 if (response.ok) {
@@ -149,12 +149,12 @@
         function updateData(id) {
             let name = document.getElementById("updateName").value;
             let age = document.getElementById("updateAge").value;
-            let subject = document.getElementById("updateSubject").value;
+            let home = document.getElementById("updateHome").value;
 
             fetch(`${apiBaseURL}/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, age: parseInt(age, 10), subject })
+                body: JSON.stringify({ name, age: parseInt(age, 10), home })
             })
             .then(response => {
                 if (response.ok) {
@@ -166,22 +166,13 @@
             .catch(error => console.error("수정 중 오류 발생:", error));
         }
 
-        function deleteDataByName(name) {
-            fetch(apiBaseURL)
-                .then(response => response.json())
-                .then(students => {
-                    const student = students.find(stu => stu.name === name);
-                    if (student) {
-                        fetch(`${apiBaseURL}/${student.id}`, { method: "DELETE" })
-                            .then(response => {
-                                if (response.ok) {
-                                    getStudentsWithCourses();
-                                } else {
-                                    console.error("삭제 중 오류 발생:", response.status, response.statusText);
-                                }
-                            });
+        function deleteDataById(id) {
+            fetch(`${apiBaseURL}/${id}`, { method: "DELETE" })
+                .then(response => {
+                    if (response.ok) {
+                        getStudentsWithCourses();
                     } else {
-                        alert("해당 이름을 찾을 수 없습니다.");
+                        console.error("삭제 중 오류 발생:", response.status, response.statusText);
                     }
                 })
                 .catch(error => console.error("삭제 중 오류 발생:", error));
