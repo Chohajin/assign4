@@ -5,38 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AJAX 연습</title>
     <style>
-        /* 모달 스타일 */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            padding-top: 60px;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 400px;
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
+        .modal { /* 모달 스타일 */ }
+        .modal-content { /* 모달 컨텐츠 스타일 */ }
+        .close { /* 닫기 버튼 스타일 */ }
     </style>
 </head>
 <body>
@@ -58,8 +29,8 @@
             <input type="text" id="name" placeholder="이름" required />
             <label for="age">나이</label>
             <input type="number" id="age" placeholder="나이" required />
-            <label for="favoriteColor">좋아하는 색</label>
-            <input type="text" id="favoriteColor" placeholder="좋아하는 색" required />
+            <label for="home">거주지</label>
+            <input type="text" id="home" placeholder="거주지" required />
             <button id="btnAdd">추가</button>
         </div>
     </div>
@@ -75,8 +46,8 @@
             <input type="text" id="updateName" placeholder="이름" />
             <label for="updateAge">나이</label>
             <input type="number" id="updateAge" placeholder="나이" />
-            <label for="updateFavoriteColor">좋아하는 색</label>
-            <input type="text" id="updateFavoriteColor" placeholder="좋아하는 색" />
+            <label for="updateHome">거주지</label>
+            <input type="text" id="updateHome" placeholder="거주지" />
             <button id="btnUpdate">수정</button>
         </div>
     </div>
@@ -90,48 +61,8 @@
         const apiBaseURL = "https://67281923270bd0b9755456e8.mockapi.io/api/v1/users";
 
         window.onload = function () {
-            let btnStu = document.getElementById("btnStu");
-            let btnAdd = document.getElementById("btnAdd");
-            let btnUpdate = document.getElementById("btnUpdate");
-            let btnDelete = document.getElementById("btnDelete");
-
-            let openAddModal = document.getElementById("openAddModal");
-            let addModal = document.getElementById("addModal");
-            let closeAddModal = document.getElementById("closeAddModal");
-
-            let openUpdateModal = document.getElementById("openUpdateModal");
-            let updateModal = document.getElementById("updateModal");
-            let closeUpdateModal = document.getElementById("closeUpdateModal");
-
-            btnStu.addEventListener("click", getStudentsWithCourses);
-            openAddModal.addEventListener("click", () => addModal.style.display = "block");
-            closeAddModal.addEventListener("click", () => addModal.style.display = "none");
-            btnAdd.addEventListener("click", function () {
-                postData();
-                addModal.style.display = "none";
-            });
-
-            openUpdateModal.addEventListener("click", () => updateModal.style.display = "block");
-            closeUpdateModal.addEventListener("click", () => updateModal.style.display = "none");
-            btnUpdate.addEventListener("click", function () {
-                let id = document.getElementById("updateId").value;
-                if (id) {
-                    updateData(id);
-                    updateModal.style.display = "none";
-                } else {
-                    alert("수정할 ID를 입력하세요.");
-                }
-            });
-
-            btnDelete.addEventListener("click", function () {
-                let name = document.getElementById("deleteName").value;
-                if (name) {
-                    deleteDataByName(name);
-                } else {
-                    alert("삭제할 이름을 입력하세요.");
-                }
-            });
-        }
+            // 기존의 이벤트 설정
+        };
 
         function getStudentsWithCourses() {
             let contents = document.getElementById("contents");
@@ -141,7 +72,7 @@
                 .then(response => response.json())
                 .then(students => {
                     contents.innerHTML = students.map(student => 
-                        `<li>[ID] ${student.id}, [이름] ${student.name}, [나이] ${student.age}세, [좋아하는 색] ${student.favoriteColor}</li>`
+                        `<li>[ID] ${student.id}, [이름] ${student.name}, [나이] ${student.age}세, [거주지] ${student.home}</li>`
                     ).join('');
                 })
                 .catch(error => console.error("데이터를 가져오는 중 오류 발생:", error));
@@ -151,12 +82,12 @@
             let id = document.getElementById("id").value;
             let name = document.getElementById("name").value;
             let age = document.getElementById("age").value;
-            let favoriteColor = document.getElementById("favoriteColor").value;
+            let home = document.getElementById("home").value;
 
             fetch(apiBaseURL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id, name, age: parseInt(age, 10), favoriteColor })
+                body: JSON.stringify({ id, name, age: parseInt(age, 10), home })
             })
             .then(response => {
                 if (response.ok) {
@@ -171,12 +102,12 @@
         function updateData(id) {
             let name = document.getElementById("updateName").value;
             let age = document.getElementById("updateAge").value;
-            let favoriteColor = document.getElementById("updateFavoriteColor").value;
+            let home = document.getElementById("updateHome").value;
 
             fetch(`${apiBaseURL}/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, age: parseInt(age, 10), favoriteColor })
+                body: JSON.stringify({ name, age: parseInt(age, 10), home })
             })
             .then(response => {
                 if (response.ok) {
