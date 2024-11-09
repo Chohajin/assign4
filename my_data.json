@@ -1,72 +1,72 @@
 [
   {
-    "createdAt": "2024-11-09T02:01:45.067Z",
+    "createdAt": "2024-11-08T23:56:40.329Z",
     "name": "Jery",
     "age": 20,
-    "color": "blue",
+    "city": "Belgium",
     "id": "1"
   },
   {
-    "createdAt": "2024-11-09T10:10:01.637Z",
+    "createdAt": "2024-11-09T02:43:30.229Z",
     "name": "Jam",
     "age": 25,
-    "color": "violet",
+    "city": "Togo",
     "id": "2"
   },
   {
-    "createdAt": "2024-11-08T20:33:26.390Z",
+    "createdAt": "2024-11-08T13:52:52.323Z",
     "name": "Marry",
     "age": 25,
-    "color": "green",
+    "city": "Panama",
     "id": "3"
   },
   {
-    "createdAt": "2024-11-09T08:47:54.082Z",
+    "createdAt": "2024-11-09T07:04:32.754Z",
     "name": "Harry",
-    "age": 22,
-    "color": "salmon",
+    "age": 2,
+    "city": "Bahrain",
     "id": "4"
   },
   {
-    "createdAt": "2024-11-09T00:09:50.245Z",
+    "createdAt": "2024-11-08T19:01:09.382Z",
     "name": "Sep",
     "age": 14,
-    "color": "black",
+    "city": "United Arab Emirates",
     "id": "5"
   },
   {
-    "createdAt": "2024-11-08T15:20:44.285Z",
+    "createdAt": "2024-11-08T13:19:11.710Z",
     "name": "Jin",
     "age": 26,
-    "color": "indigo",
+    "city": "Singapore",
     "id": "6"
   },
   {
-    "createdAt": "2024-11-08T21:09:05.019Z",
+    "createdAt": "2024-11-09T03:16:09.305Z",
     "name": "Kitty",
     "age": 28,
-    "color": "ivory",
+    "city": "Comoros",
     "id": "7"
   },
   {
-    "createdAt": "2024-11-08T18:15:11.540Z",
+    "createdAt": "2024-11-08T16:47:40.755Z",
     "name": "Hanry",
     "age": 18,
-    "color": "teal",
+    "city": "United Arab Emirates",
     "id": "8"
   },
   {
-    "createdAt": "2024-11-09T10:13:14.694Z",
+    "createdAt": "2024-11-09T03:10:31.258Z",
     "name": "Ken",
     "age": 34,
-    "color": "mint green",
+    "city": "British Indian Ocean Territory (Chagos Archipelago)",
     "id": "9"
   },
   {
-    "createdAt": "2024-11-09T08:11:10.059Z",
+    "createdAt": "2024-11-09T02:56:34.702Z",
     "name": "Pony",
     "age": 28,
-    "color": "fuchsia",
+    "city": "Denmark",
     "id": "10"
   }
 ]
