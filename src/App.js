@@ -8,6 +8,7 @@ function App() {
   const [editStudent, setEditStudent] = useState(null);
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
+  const [favoriteColor, setFavoriteColor] = useState("");
 
   useEffect(() => {
     fetchStudents();
@@ -27,6 +28,7 @@ function App() {
     setEditStudent(student);
     setName(student.name);
     setAge(student.age);
+    setFavoriteColor(student.favoriteColor);
   };
 
   const handleUpdate = async () => {
@@ -35,7 +37,11 @@ function App() {
         const response = await fetch(`${apiBaseURL}/${editStudent.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, age: parseInt(age, 10) }),
+          body: JSON.stringify({
+            name,
+            age: parseInt(age, 10),
+            favoriteColor,
+          }),
         });
 
         if (response.ok) {
@@ -43,6 +49,7 @@ function App() {
           setEditStudent(null);
           setName("");
           setAge("");
+          setFavoriteColor("");
         }
       } catch (error) {
         console.error("수정 중 오류 발생:", error);
@@ -60,17 +67,22 @@ function App() {
   };
 
   const handleAdd = async () => {
-    if (name && age) {
+    if (name && age && favoriteColor) {
       try {
         const response = await fetch(apiBaseURL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, age: parseInt(age, 10) }),
+          body: JSON.stringify({
+            name,
+            age: parseInt(age, 10),
+            favoriteColor,
+          }),
         });
 
         if (response.ok) fetchStudents();
         setName("");
         setAge("");
+        setFavoriteColor("");
       } catch (error) {
         console.error("추가 중 오류 발생:", error);
       }
@@ -84,7 +96,7 @@ function App() {
         <ul>
           {students.map((student) => (
             <li key={student.id}>
-              ID {student.id} - {student.name} ({student.age}세)
+              ID {student.id} - {student.name} ({student.age}세) - 좋아하는 색: {student.favoriteColor}
               <button onClick={() => handleEditClick(student)}>수정</button>
               <button onClick={() => handleDelete(student.id)}>삭제</button>
             </li>
@@ -97,6 +109,8 @@ function App() {
           <input value={name} onChange={(e) => setName(e.target.value)} />
           <label>나이:</label>
           <input type="number" value={age} onChange={(e) => setAge(e.target.value)} />
+          <label>좋아하는 색:</label>
+          <input value={favoriteColor} onChange={(e) => setFavoriteColor(e.target.value)} />
           <button onClick={handleAdd}>추가</button>
         </div>
 
@@ -107,6 +121,8 @@ function App() {
             <input value={name} onChange={(e) => setName(e.target.value)} />
             <label>나이:</label>
             <input type="number" value={age} onChange={(e) => setAge(e.target.value)} />
+            <label>좋아하는 색:</label>
+            <input value={favoriteColor} onChange={(e) => setFavoriteColor(e.target.value)} />
             <button onClick={handleUpdate}>저장</button>
             <button onClick={() => setEditStudent(null)}>취소</button>
           </div>
