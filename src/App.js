@@ -8,7 +8,7 @@ function App() {
   const [editStudent, setEditStudent] = useState(null);
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
-  const [color, setColor] = useState(""); // 좋아하는 색을 color로 설정
+  const [color, setColor] = useState(""); // 좋아하는 색 추가
 
   useEffect(() => {
     fetchStudents();
@@ -28,7 +28,7 @@ function App() {
     setEditStudent(student);
     setName(student.name);
     setAge(student.age);
-    setColor(student.color);
+    setColor(student.color); // 좋아하는 색 설정
   };
 
   const handleUpdate = async () => {
@@ -110,7 +110,7 @@ function App() {
           <label>나이:</label>
           <input type="number" value={age} onChange={(e) => setAge(e.target.value)} />
           <label>좋아하는 색:</label>
-          <input value={color.human} onChange={(e) => setColor(e.target.value)} />
+          <input value={color} onChange={(e) => setColor(e.target.value)} />
           <button onClick={handleAdd}>추가</button>
         </div>
 
