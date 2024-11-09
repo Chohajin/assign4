@@ -52,6 +52,8 @@
         <div class="modal-content">
             <span class="close" id="closeAddModal">&times;</span>
             <h2>학생 데이터 추가</h2>
+            <label for="id">학생 ID</label>
+            <input type="text" id="id" placeholder="ID 입력" required />
             <label for="name">이름</label>
             <input type="text" id="name" placeholder="이름" required />
             <label for="age">나이</label>
@@ -81,6 +83,8 @@
     <button id="btnDelete">삭제</button>
 
     <script>
+        const apiBaseURL = "https://67281923270bd0b9755456e8.mockapi.io/api/v1/students";
+
         window.onload = function () {
             let btnStu = document.getElementById("btnStu");
             let btnAdd = document.getElementById("btnAdd");
@@ -134,41 +138,74 @@
             let contents = document.getElementById("contents");
             contents.innerHTML = ""; // 초기화
 
-            for (let i = 0; i < 10; i++) {
-                const xhr = new XMLHttpRequest();
-                xhr.open("GET", `http://localhost:3001/${i}`);
-                xhr.setRequestHeader("content-type", "application/json");
-                xhr.onload = () => {
-                    if (xhr.status === 200) {
-                        const student = JSON.parse(xhr.response);
-                        contents.innerHTML += `<li>[ID] ${student.id}, [이름] ${student.name}, [나이] ${student.age}세</li>`;
-                    } else {
-                        console.log("데이터를 가져오는 중 오류 발생:", xhr.status, xhr.statusText);
-                    }
-                };
-                xhr.send();
-            }
+            fetch(apiBaseURL)
+                .then(response => response.json())
+                .then(students => {
+                    contents.innerHTML = students.map(student => 
+                        `<li>[ID] ${student.id}, [이름] ${student.name}, [나이] ${student.age}세</li>`
+                    ).join('');
+                })
+                .catch(error => console.error("데이터를 가져오는 중 오류 발생:", error));
         }
 
         function postData() {
+            let id = document.getElementById("id").value;
             let name = document.getElementById("name").value;
             let age = document.getElementById("age").value;
-            const xhr = new XMLHttpRequest();
 
-            xhr.open("POST", "http://localhost:3001/students");
-            xhr.setRequestHeader("content-type", "application/json; charset=UTF-8");
-            const data = { name: name, age: parseInt(age, 10) };
-
-            xhr.send(JSON.stringify(data));
-
-            xhr.onload = () => {
-                if (xhr.status === 201) {
-                    // 새로 추가된 데이터를 반영하기 위해 목록 새로고침
+            fetch(apiBaseURL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id, name, age: parseInt(age, 10) })
+            })
+            .then(response => {
+                if (response.ok) {
                     getStudentsWithCourses();
                 } else {
-                    console.log("추가 중 오류 발생:", xhr.status, xhr.statusText);
+                    console.error("추가 중 오류 발생:", response.status, response.statusText);
                 }
-            }
+            })
+            .catch(error => console.error("추가 중 오류 발생:", error));
+        }
+
+        function updateData(id) {
+            let name = document.getElementById("updateName").value;
+            let age = document.getElementById("updateAge").value;
+
+            fetch(`${apiBaseURL}/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, age: parseInt(age, 10) })
+            })
+            .then(response => {
+                if (response.ok) {
+                    getStudentsWithCourses();
+                } else {
+                    console.error("수정 중 오류 발생:", response.status, response.statusText);
+                }
+            })
+            .catch(error => console.error("수정 중 오류 발생:", error));
+        }
+
+        function deleteDataByName(name) {
+            fetch(apiBaseURL)
+                .then(response => response.json())
+                .then(students => {
+                    const student = students.find(stu => stu.name === name);
+                    if (student) {
+                        fetch(`${apiBaseURL}/${student.id}`, { method: "DELETE" })
+                            .then(response => {
+                                if (response.ok) {
+                                    getStudentsWithCourses();
+                                } else {
+                                    console.error("삭제 중 오류 발생:", response.status, response.statusText);
+                                }
+                            });
+                    } else {
+                        alert("해당 이름을 찾을 수 없습니다.");
+                    }
+                })
+                .catch(error => console.error("삭제 중 오류 발생:", error));
         }
     </script>
 </body>
