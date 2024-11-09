@@ -4,64 +4,104 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AJAX 연습</title>
-    <style>
-        .modal { /* 모달 스타일 */ }
-        .modal-content { /* 모달 컨텐츠 스타일 */ }
-        .close { /* 닫기 버튼 스타일 */ }
-    </style>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <h1>학생 데이터 관리</h1>
-    <button id="btnStu">모든 학생 데이터 가져오기</button> <br />
-    <button id="openAddModal">학생 데이터 추가</button>
-    <button id="openUpdateModal">학생 데이터 수정</button>
+    <div class="container">
+        <h1 class="mt-4">학생 데이터 관리</h1>
+        <button id="btnStu" class="btn btn-primary">모든 학생 데이터 가져오기</button>
+        <button id="openAddModal" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal">학생 데이터 추가</button>
+        <button id="openUpdateModal" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModal">학생 데이터 수정</button>
 
-    <div id="contents"></div>
+        <div id="contents" class="mt-4"></div>
 
-    <!-- 데이터 추가 모달 -->
-    <div id="addModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeAddModal">&times;</span>
-            <h2>학생 데이터 추가</h2>
-            <label for="id">학생 ID</label>
-            <input type="text" id="id" placeholder="ID 입력" required />
-            <label for="name">이름</label>
-            <input type="text" id="name" placeholder="이름" required />
-            <label for="age">나이</label>
-            <input type="number" id="age" placeholder="나이" required />
-            <label for="home">거주지</label>
-            <input type="text" id="home" placeholder="거주지" required />
-            <button id="btnAdd">추가</button>
+        <!-- 데이터 추가 모달 -->
+        <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addModalLabel">학생 데이터 추가</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="id">학생 ID</label>
+                        <input type="text" id="id" class="form-control" placeholder="ID 입력" required />
+                        <label for="name" class="mt-2">이름</label>
+                        <input type="text" id="name" class="form-control" placeholder="이름" required />
+                        <label for="age" class="mt-2">나이</label>
+                        <input type="number" id="age" class="form-control" placeholder="나이" required />
+                        <label for="home" class="mt-2">거주지</label>
+                        <input type="text" id="home" class="form-control" placeholder="거주지" required />
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnAdd" class="btn btn-primary">추가</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <!-- 데이터 수정 모달 -->
-    <div id="updateModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeUpdateModal">&times;</span>
-            <h2>학생 데이터 수정</h2>
-            <label for="updateId">학생 ID</label>
-            <input type="number" id="updateId" placeholder="ID 입력" required />
-            <label for="updateName">이름</label>
-            <input type="text" id="updateName" placeholder="이름" />
-            <label for="updateAge">나이</label>
-            <input type="number" id="updateAge" placeholder="나이" />
-            <label for="updateHome">거주지</label>
-            <input type="text" id="updateHome" placeholder="거주지" />
-            <button id="btnUpdate">수정</button>
+        <!-- 데이터 수정 모달 -->
+        <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateModalLabel">학생 데이터 수정</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="updateId">학생 ID</label>
+                        <input type="number" id="updateId" class="form-control" placeholder="ID 입력" required />
+                        <label for="updateName" class="mt-2">이름</label>
+                        <input type="text" id="updateName" class="form-control" placeholder="이름" />
+                        <label for="updateAge" class="mt-2">나이</label>
+                        <input type="number" id="updateAge" class="form-control" placeholder="나이" />
+                        <label for="updateHome" class="mt-2">거주지</label>
+                        <input type="text" id="updateHome" class="form-control" placeholder="거주지" />
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnUpdate" class="btn btn-warning">수정</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <h2>학생 데이터 삭제</h2>
-    <label for="deleteName">이름</label>
-    <input type="text" id="deleteName" placeholder="이름" required />
-    <button id="btnDelete">삭제</button>
+        <h2 class="mt-4">학생 데이터 삭제</h2>
+        <label for="deleteName">이름</label>
+        <input type="text" id="deleteName" class="form-control w-25" placeholder="이름" required />
+        <button id="btnDelete" class="btn btn-danger mt-2">삭제</button>
+    </div>
 
     <script>
         const apiBaseURL = "https://67281923270bd0b9755456e8.mockapi.io/api/v1/users";
 
         window.onload = function () {
-            // 기존의 이벤트 설정
+            document.getElementById("btnStu").addEventListener("click", getStudentsWithCourses);
+            document.getElementById("btnAdd").addEventListener("click", function () {
+                postData();
+                $('#addModal').modal('hide');
+            });
+            document.getElementById("btnUpdate").addEventListener("click", function () {
+                const id = document.getElementById("updateId").value;
+                if (id) {
+                    updateData(id);
+                    $('#updateModal').modal('hide');
+                } else {
+                    alert("수정할 ID를 입력하세요.");
+                }
+            });
+            document.getElementById("btnDelete").addEventListener("click", function () {
+                const name = document.getElementById("deleteName").value;
+                if (name) {
+                    deleteDataByName(name);
+                } else {
+                    alert("삭제할 이름을 입력하세요.");
+                }
+            });
         };
 
         function getStudentsWithCourses() {
@@ -79,10 +119,10 @@
         }
 
         function postData() {
-            let id = document.getElementById("id").value;
-            let name = document.getElementById("name").value;
-            let age = document.getElementById("age").value;
-            let home = document.getElementById("home").value;
+            const id = document.getElementById("id").value;
+            const name = document.getElementById("name").value;
+            const age = document.getElementById("age").value;
+            const home = document.getElementById("home").value;
 
             fetch(apiBaseURL, {
                 method: "POST",
@@ -100,9 +140,9 @@
         }
 
         function updateData(id) {
-            let name = document.getElementById("updateName").value;
-            let age = document.getElementById("updateAge").value;
-            let home = document.getElementById("updateHome").value;
+            const name = document.getElementById("updateName").value;
+            const age = document.getElementById("updateAge").value;
+            const home = document.getElementById("updateHome").value;
 
             fetch(`${apiBaseURL}/${id}`, {
                 method: "PUT",
