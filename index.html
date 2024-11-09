@@ -31,8 +31,8 @@
                     <input type="text" id="name" class="form-control" placeholder="이름" required />
                     <label for="age">나이</label>
                     <input type="number" id="age" class="form-control" placeholder="나이" required />
-                    <label for="home">거주지</label>
-                    <input type="text" id="home" class="form-control" placeholder="거주지" required />
+                    <label for="city">거주지</label>
+                    <input type="text" id="city" class="form-control" placeholder="거주지" required />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
@@ -59,8 +59,8 @@
                     <input type="text" id="updateName" class="form-control" placeholder="이름" />
                     <label for="updateAge">나이</label>
                     <input type="number" id="updateAge" class="form-control" placeholder="나이" />
-                    <label for="updateHome">거주지</label>
-                    <input type="text" id="updateHome" class="form-control" placeholder="거주지" />
+                    <label for="updateCity">거주지</label>
+                    <input type="text" id="updateCity" class="form-control" placeholder="거주지" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
@@ -119,7 +119,7 @@
                 .then(response => response.json())
                 .then(students => {
                     contents.innerHTML = students.map(student => 
-                        `<li>[ID] ${student.id}, [이름] ${student.name}, [나이] ${student.age}세, [거주지] ${student.home}</li>`
+                        `<li>[ID] ${student.id}, [이름] ${student.name}, [나이] ${student.age}세, [거주지] ${student.city}</li>`
                     ).join('');
                 })
                 .catch(error => console.error("데이터를 가져오는 중 오류 발생:", error));
@@ -129,12 +129,12 @@
             let id = document.getElementById("id").value;
             let name = document.getElementById("name").value;
             let age = document.getElementById("age").value;
-            let home = document.getElementById("home").value;
+            let city = document.getElementById("city").value;
 
             fetch(apiBaseURL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id, name, age: parseInt(age, 10), home })
+                body: JSON.stringify({ id, name, age: parseInt(age, 10), city })
             })
             .then(response => {
                 if (response.ok) {
@@ -149,12 +149,12 @@
         function updateData(id) {
             let name = document.getElementById("updateName").value;
             let age = document.getElementById("updateAge").value;
-            let home = document.getElementById("updateHome").value;
+            let city = document.getElementById("updateCity").value;
 
             fetch(`${apiBaseURL}/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, age: parseInt(age, 10), home })
+                body: JSON.stringify({ name, age: parseInt(age, 10), city })
             })
             .then(response => {
                 if (response.ok) {

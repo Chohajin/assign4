@@ -8,7 +8,7 @@ function App() {
   const [editStudent, setEditStudent] = useState(null);
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
-  const [home, setHome] = useState(""); // 거주지 추가
+  const [city, setCity] = useState(""); // 거주지 추가
 
   useEffect(() => {
     fetchStudents();
@@ -28,7 +28,7 @@ function App() {
     setEditStudent(student);
     setName(student.name);
     setAge(student.age);
-    setHome(student.home); // 거주지 설정
+    setCity(student.city); // 거주지 설정
   };
 
   const handleUpdate = async () => {
@@ -40,7 +40,7 @@ function App() {
           body: JSON.stringify({
             name,
             age: parseInt(age, 10),
-            home,
+            city,
           }),
         });
 
@@ -49,7 +49,7 @@ function App() {
           setEditStudent(null);
           setName("");
           setAge("");
-          setHome("");
+          setCity("");
         }
       } catch (error) {
         console.error("수정 중 오류 발생:", error);
@@ -67,7 +67,7 @@ function App() {
   };
 
   const handleAdd = async () => {
-    if (name && age && home) {
+    if (name && age && city) {
       try {
         const response = await fetch(apiBaseURL, {
           method: "POST",
@@ -75,14 +75,14 @@ function App() {
           body: JSON.stringify({
             name,
             age: parseInt(age, 10),
-            home,
+            city,
           }),
         });
 
         if (response.ok) fetchStudents();
         setName("");
         setAge("");
-        setHome("");
+        setCity("");
       } catch (error) {
         console.error("추가 중 오류 발생:", error);
       }
@@ -96,7 +96,7 @@ function App() {
         <ul>
           {students.map((student) => (
             <li key={student.id}>
-              ID {student.id} - {student.name} ({student.age}세) - 거주지: {student.home}
+              ID {student.id} - {student.name} ({student.age}세) - 거주지: {student.city}
               <button onClick={() => handleEditClick(student)}>수정</button>
               <button onClick={() => handleDelete(student.id)}>삭제</button>
             </li>
@@ -110,7 +110,7 @@ function App() {
           <label>나이:</label>
           <input type="number" value={age} onChange={(e) => setAge(e.target.value)} />
           <label>거주지:</label>
-          <input value={home} onChange={(e) => setHome(e.target.value)} />
+          <input value={city} onChange={(e) => setCity(e.target.value)} />
           <button onClick={handleAdd}>추가</button>
         </div>
 
@@ -122,7 +122,7 @@ function App() {
             <label>나이:</label>
             <input type="number" value={age} onChange={(e) => setAge(e.target.value)} />
             <label>거주지:</label>
-            <input value={home} onChange={(e) => setHome(e.target.value)} />
+            <input value={city} onChange={(e) => setCity(e.target.value)} />
             <button onClick={handleUpdate}>저장</button>
             <button onClick={() => setEditStudent(null)}>취소</button>
           </div>
